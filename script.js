@@ -1,46 +1,77 @@
-let targetColor = ""
+let targetColor = "";
 let score = 0;
 let time = 30;
 let timer;
-let colors = ['red', 'orange', 'blue', 'green', 'black', 'grey', 'hotpink', 'purple', 'white', 'yellow', 'lightgreen', 'maroon', 'khaki', 'brown', 'navy', 'indigo']
-const grid = document.getElementById("grid")
-const targetColorDisplay = document.getElementById("target-color")
+let colors = [
+  "red",
+  "orange",
+  "blue",
+  "green",
+  "black",
+  "grey",
+  "hotpink",
+  "purple",
+  "white",
+  "yellow",
+  "lightgreen",
+  "maroon",
+  "khaki",
+  "brown",
+  "navy",
+  "indigo",
+];
+const grid = document.getElementById("grid");
+const targetColorDisplay = document.getElementById("target-color");
 const scoreDisplay = document.getElementById("score");
 const timeDisplay = document.getElementById("time");
-function getRandomColor() {
 
-}
-
-function shuffleArray(colors){
-
+function shuffleArray(colors) {
+  for (let i = colors.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [colors[i], (colors[j] = colors[j]), colors[i]];
+  }
+  return colors;
 }
 
 function createGrid() {
-    grid.innerHTML = ""
-    colors = shuffleArray(colors)
-    targetColor = colors[Math.floor(Math.random() * 16)]
-    targetColorDisplay.textContent= targetColor
-    colors.forEach((color) => {
-        const box = document.createElement("div")
-        box.className = "color-box"
-    })
+  grid.innerHTML = "";
+  colors = shuffleArray(colors);
+  targetColor = colors[Math.floor(Math.random() * 16)];
+  targetColorDisplay.textContent = targetColor;
+  colors.forEach((color) => {
+    const box = document.createElement("div");
+    box.className = "color-box";
+    box.style.backgroundColor = color;
+    box.addEventListener("click", () => {
+      handleClick(color);
+    });
+    grid.appendChild(box);
+  });
 }
 
+function handleClick(clickedColor) {
+  if (clickedColor === targetColor) {
+    score++;
+    scoreDisplay.textContent = score;
+    createGrid();
+  }
+}
 
-function startGame (){
-    score = 0;
-    time = 30
-    scoreDisplay.textContent = score
+function startGame() {
+   
+    
+  score = 0;
+  time = 30;
+  scoreDisplay.textContent = score;
+  timeDisplay.textContent = time;
+  createGrid();
+  clearInterval(timer);
+  timer = setInterval(() => {
+    time--;
     timeDisplay.textContent = time;
-    createGrid()
-    clearInterval(timer)
-    timer= setInterval(() => {
-        time--;
-        timeDisplay.textContent=time
-        if(time ===0) {
-            clearInterval(timer)
-            alert(":timer_clock:Time's up! Your final score: "+score)
-        }
-    },1000)
+    if (time === 0) {
+      clearInterval(timer);
+      alert(":timer_clock:Time's up! Your final score: " + score);
+    }
+  }, 1000);
 }
-
