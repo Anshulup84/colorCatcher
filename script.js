@@ -58,8 +58,7 @@ function handleClick(clickedColor) {
 }
 
 function startGame() {
-   
-    
+      
   score = 0;
   time = 30;
   scoreDisplay.textContent = score;
@@ -74,4 +73,26 @@ function startGame() {
       alert(":timer_clock:Time's up! Your final score: " + score);
     }
   }, 1000);
+}
+
+let darkButton = document.getElementById("dark")
+let lightButton = document.getElementById("light")
+
+lightButton.addEventListener('click', lightMode)
+darkButton.addEventListener('click',darkMode)
+
+function lightMode () {
+  document.body.style.backgroundColor = "#f0f0f0";
+  let gc = document.querySelector(".game-container")
+  gc.style.backgroundColor = "white"
+  gc.style.color = 'black'
+  document.getElementById("mode").style.boxShadow = "5px 5px 5px black"
+}
+
+function darkMode () {
+  document.body.style.backgroundColor = "#333333";
+  let gc = document.querySelector(".game-container")
+  gc.style.backgroundColor = "black"
+  gc.style.color = 'white'
+  document.getElementById("mode").style.boxShadow = "5px 5px 5px white"
 }
